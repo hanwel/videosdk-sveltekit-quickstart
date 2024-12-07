@@ -86,9 +86,15 @@
 	</div>
 	{#if !inSession}
 		<div class="mx-auto flex w-64 flex-col self-center">
-			Beim Herstellen der Verbindung...
+			<button
+				class="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 w-64 self-center"
+				on:click={startCall}
+				disabled={disableStart}
+			>
+				Medititationsraum betreten
+			</button>
 		</div>
-	{:else}
+		{:else}
 		<div class="flex w-full flex-col justify-around self-center">
 			<div class="flex flex-row self-center m-2">
 				<button on:click={toggleVideo} class="bg-blue-500 text-white font-bold py-2 px-4 rounded mx-2 w-64 self-center">
