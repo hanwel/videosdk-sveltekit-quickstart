@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import ZoomVideo, { type VideoPlayer, VideoQuality } from '@zoom/videosdk';
 
 	export let JWT: string;
@@ -12,18 +12,21 @@
 	let audioMuted = false;
 	let videoMuted = false;
 	let videoContainer: HTMLElement;
+	let cDoing = "";
 
 	onMount(async () => {
 		await client.init('en-US', 'Global', { patchJsMedia: true });
-		await startCall();
 	});
 
 	const startCall = async () => {
 		disableStart = true;
+		cDoing = "Den Meditationsraum "+slug+" betreten";
 		client.on('peer-video-state-change', renderVideo);
 		await client.join(slug, JWT, username);
 		const mediaStream = client.getMediaStream();
+		cDoing = "Audio einschalten";
 		await mediaStream.startAudio();
+		cDoing = "Video einschalten";
 		await mediaStream.startVideo();
 		await renderVideo({ action: 'Start', userId: client.getCurrentUserInfo().userId });
 		inSession = true;
@@ -85,16 +88,21 @@
 		<video-player-container bind:this={videoContainer}></video-player-container>
 	</div>
 	{#if !inSession}
-		<div class="mx-auto flex w-64 flex-col self-center">
-			<button
-				class="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 w-64 self-center"
-				on:click={startCall}
-				disabled={disableStart}
-			>
+	<br>
+		{#if !disableStart}
+			<div class="mx-auto flex w-64 flex-col self-center">
+				<button
+					class="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 w-64 self-center"
+					on:click={startCall}
+					disabled={disableStart} 
+				>
 				Medititationsraum betreten
-			</button>
-		</div>
+				</button>
+			</div>
 		{:else}
+			<h1 class="text-center text-3xl font-bold my-4">{cDoing}</h1>
+		{/if}
+	{:else}
 		<div class="flex w-full flex-col justify-around self-center">
 			<div class="flex flex-row self-center m-2">
 				<button on:click={toggleVideo} class="bg-blue-500 text-white font-bold py-2 px-4 rounded mx-2 w-64 self-center">
