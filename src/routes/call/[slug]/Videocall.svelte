@@ -15,6 +15,7 @@
 
 	onMount(async () => {
 		await client.init('en-US', 'Global', { patchJsMedia: true });
+		await startCall();
 	});
 
 	const startCall = async () => {
@@ -85,13 +86,7 @@
 	</div>
 	{#if !inSession}
 		<div class="mx-auto flex w-64 flex-col self-center">
-			<button
-				class={`${!disableStart ? 'bg-blue-500' : 'bg-gray-300'} text-white font-bold py-2 px-4 rounded mb-4 w-64 self-center`}
-				on:click={startCall}
-				disabled={disableStart}
-			>
-				Join
-			</button>
+			Beim Herstellen der Verbindung...
 		</div>
 	{:else}
 		<div class="flex w-full flex-col justify-around self-center">
