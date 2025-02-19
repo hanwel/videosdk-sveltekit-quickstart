@@ -12,10 +12,11 @@
 	let audioMuted = false;
 	let videoMuted = false;
 	let videoContainer: HTMLElement;
-	let videoOptions = { originalRatio: true, 
+	let videoOptions = { originalRatio: false, 
+		maxFrameRate: 30, 
+		maxResolution: '720p',
+		optimized: true,
 		hd:true, 
-		captureWidth: 660, 
-		captureHeight: 660, 
 		mirrored:true, } as CaptureVideoOption;
 
 	onMount(async () => {
