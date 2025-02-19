@@ -10,6 +10,6 @@
 
 <div class="flex flex-col">
 	<script src="/coi-serviceworker.js"></script>
-	<h1 class="text-center text-3xl font-bold my-4">Session: {slug}</h1>
+	<h1 class="text-center text-3xl font-bold my-4">Session2: {slug}</h1>
 	<Videocall {JWT} {slug} />
 </div>
