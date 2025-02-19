@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import ZoomVideo, { type VideoPlayer, VideoQuality } from '@zoom/videosdk';
+	import ZoomVideo, { type CaptureVideoOption, type VideoPlayer, VideoQuality } from '@zoom/videosdk';
 
 	export let JWT: string;
 	export let slug: string;
@@ -12,6 +12,11 @@
 	let audioMuted = false;
 	let videoMuted = false;
 	let videoContainer: HTMLElement;
+	let videoOptions = { originalRatio: false, 
+		hd:true, 
+		captureWidth: 660, 
+		captureHeight: 660, 
+		mirrored:true, } as CaptureVideoOption;
 
 	onMount(async () => {
 		await client.init('en-US', 'Global', { patchJsMedia: true });
@@ -23,7 +28,7 @@
 		await client.join(slug, JWT, username);
 		const mediaStream = client.getMediaStream();
 		await mediaStream.startAudio();
-		await mediaStream.startVideo();
+		await mediaStream.startVideo(videoOptions);
 		await renderVideo({ action: 'Start', userId: client.getCurrentUserInfo().userId });
 		inSession = true;
 		disableStart = false;
@@ -59,7 +64,7 @@
 			await mediaStream.stopVideo();
 			await renderVideo({ action: 'Stop', userId: client.getCurrentUserInfo().userId });
 		} else {
-			await mediaStream.startVideo();
+			await mediaStream.startVideo(videoOptions);
 			await renderVideo({ action: 'Start', userId: client.getCurrentUserInfo().userId });
 		}
 		videoMuted = !mediaStream.isCapturingVideo();
