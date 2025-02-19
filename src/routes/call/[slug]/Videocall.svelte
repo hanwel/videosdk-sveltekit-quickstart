@@ -77,12 +77,7 @@
 </script>
 
 <div class="flex h-full w-full flex-1 flex-col">
-	<div
-		style={!inSession ? 'display: none;' : 'display: flex;'}
-		class="flex max-h-[75vh] w-[80vw] overflow-hidden self-center margin-auto"
-	>
 		<video-player-container bind:this={videoContainer}></video-player-container>
-	</div>
 	{#if !inSession}
 		<div class="mx-auto flex w-64 flex-col self-center">
 			<button
