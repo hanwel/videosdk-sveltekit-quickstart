@@ -12,7 +12,7 @@
 	let audioMuted = false;
 	let videoMuted = false;
 	let videoContainer: HTMLElement;
-	let videoOptions = { originalRatio: false, 
+	let videoOptions = { originalRatio: true, 
 		hd:true, 
 		captureWidth: 660, 
 		captureHeight: 660, 
